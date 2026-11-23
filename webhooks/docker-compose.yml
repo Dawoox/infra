@@ -1,0 +1,31 @@
+services:
+  webhook:
+    build: .
+    restart: unless-stopped
+    user: "1000:1000"
+    group_add:
+      - "989"
+    environment:
+      - HOME=/tmp
+      - HYPR_WEBHOOK_SECRET=${HYPR_WEBHOOK_SECRET}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/hypr:/srv/hypr
+      - ./logs:/logs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webhooks.rule=Host(`dawoox.dev`) && PathPrefix(`/api/webhooks`)"
+      - "traefik.http.routers.webhooks.entrypoints=websecure"
+      - "traefik.http.routers.webhooks.tls=true"
+      - "traefik.http.routers.webhooks.tls.certresolver=le"
+      - "traefik.http.routers.webhooks.middlewares=rewrite-webhooks"
+      - "traefik.http.middlewares.rewrite-webhooks.replacepathregex.regex=^/api/webhooks/(.*)"
+      - "traefik.http.middlewares.rewrite-webhooks.replacepathregex.replacement=/hooks/$$1"
+      - "traefik.http.services.webhooks.loadbalancer.server.port=80"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    name: traefik-routing
+    external: true
