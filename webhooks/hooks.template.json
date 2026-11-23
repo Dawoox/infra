@@ -4,7 +4,7 @@
     "execute-command": "/bin/sh",
     "pass-arguments-to-command": [
       { "source": "string", "name": "-c" },
-      { "source": "string", "name": "{ cd /srv/hypr && git pull --ff-only && docker compose up -d --build && docker image prune -f; } >> ./logs/hypr-deploy.log 2>&1 &" }
+      { "source": "string", "name": "/etc/actions/hypr-deploy.sh >> ./logs/hypr-deploy.log 2>&1 &" }
     ],
     "concurrency": 1,
     "include-command-output-in-response": true,

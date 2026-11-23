@@ -11,6 +11,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /srv/hypr:/srv/hypr
+      - ./actions:/etc/actions:ro
       - ./logs:/logs
     labels:
       - "traefik.enable=true"
