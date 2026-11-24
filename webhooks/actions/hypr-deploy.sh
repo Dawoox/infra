@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 set -xeuo pipefail
-echo "--- $(date "+%Y-%m-%d %H:%M:%S) ---"
+echo "--- $(date "+%Y-%m-%d %H:%M:%S") ---"
 cd /srv/hypr
 
 git fetch --prune origin
