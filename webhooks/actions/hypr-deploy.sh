@@ -10,5 +10,6 @@ git clean -fd
 mkdir -p ./site/static
 git rev-parse --short HEAD | tr -d '\n' > ./site/static/rev.txt
 
+docker compose down
 docker compose up -d --build
 docker image prune -f
